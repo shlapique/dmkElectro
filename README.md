@@ -1,4 +1,4 @@
-#### naive script to download "protected" files from online uni library
+#### naive script to download "protected" files from online uni library (!unfinished)
 
 it has a couple of problems:
 * some books are displayed incorrectly (i think, solution is in wget config)
