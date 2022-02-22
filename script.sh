@@ -5,12 +5,11 @@ dir="$(pwd)/out"
 dir_h="${dir}/src"
 counter=1
 cur_dir="${dir_h}$counter"
-global_key=""
 
 if [ ! -e $dir ]
 then		
-	mkdir $dir 
-	mkdir "${dir_h}$counter"
+    mkdir $dir 
+	mkdir ${dir_h}$counter
 	wget -P "${dir_h}$counter" -O "${dir_h}$counter/source" $url
 else
 	file_num="$(ls $dir -1bA | wc -l)"
@@ -31,7 +30,7 @@ total_size=${total_size:: -1} #4
 global_key="$(grep '000001' "$cur_dir/source")"
 extra_val=${global_key:0: 440}
 global_key=${global_key/$extra_val}
-##########3
+###########
 
 #----
 key="$(expr index "$url" ?)"
@@ -41,8 +40,7 @@ rul=${#rul}
 #-----
 
 ########
-extra_val=${global_key:0: $((117+$rul))}
-global_key=${global_key/$extra_val}
+global_key=${global_key/${global_key:0: $((117+$rul))}}
 global_key=${global_key/\000\001\.png\" style\=\"float\:left\;text\-align\:center\;\" \/\>} #4
 global_key=${global_key::-1}
 ###########
@@ -57,7 +55,7 @@ do
 		str="$extra$i"		
 	fi
 	out="http://elibrary.mai.ru/ProtectedView/Content/tmp/${global_key}${str}.png"
-	wget -q -P "$cur_dir" --wait=1000000 $out
+	wget -q -P "$cur_dir" $out
 done
 
 #find "$PWD" -iname '*.png' -execdir convert '{}' '{}'.pdf \;
