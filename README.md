@@ -6,9 +6,9 @@ on source site there're a couple of problems:
 * the book should be published no later than 2019-2020, due to change in page structure (for "parsing")
 
 ### required dependencies
-'''
+```
 sudo zypper install imagemagick 
-'''
+```
 *on most distros may already be installed by default*
 
 
