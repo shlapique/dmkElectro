@@ -7,7 +7,7 @@ on source site there're a couple of problems:
 
 ### required dependencies
 ```
-sudo zypper install imagemagick 
+sudo zypper install ghostscript imagemagick 
 ```
 *on most distros may already be installed by default*
 
