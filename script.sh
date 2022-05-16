@@ -2,10 +2,10 @@
 
 usage(){
     echo "usage: ${0##*/} script [-H | --help]"
-    echo -e "\t-U, --url        url of the book source"
-    echo -e "\t-D, --directory  dir to save images"
-    echo -e "\t-P, --pdf        to convert images into one pdf (by default 'out.pdf')"
-    echo -e "\t-H, --help       print to the output this message"
+    echo -e "\t-u, --url        url of the book source"
+    echo -e "\t-d, --directory  dir to save images"
+    echo -e "\t-p, --pdf        to convert images into one pdf (by default 'out.pdf')"
+    echo -e "\t-h, --help       print to the output this message"
 }
 
 error(){
@@ -32,16 +32,16 @@ pdf_name="out.pdf"
 while [ ! -z "$1" ];
 do
     case "$1" in
-        --url | -U )        
+        --url | -u )        
             shift
             url=$1
             url_flag=1
             ;;
-        --directory | -D )   
+        --directory | -d )   
             shift
             dir="$(pwd)/$1"
             ;;
-        --pdf | -P )
+        --pdf | -p )
             shift
             pdf_conv_flag=1
             if [ ! -z "$1" ]
@@ -49,7 +49,7 @@ do
                 pdf_name=$1
             fi
             ;;
-        --help | -H )       
+        --help | -h )       
             usage
             exit 0
             ;;
