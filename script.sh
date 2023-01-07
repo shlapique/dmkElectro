@@ -2,10 +2,11 @@
 
 usage(){
     echo "usage: ${0##*/} script [-H | --help]"
-    echo -e "\t-u, --url        url of the book source"
-    echo -e "\t-d, --directory  dir to save images"
-    echo -e "\t-p, --pdf        to convert images into one pdf (by default 'out.pdf')"
-    echo -e "\t-h, --help       print to the output this message"
+    echo -e "\t-u,  --url          url of the book source"
+    echo -e "\t-d,  --directory    dir to save images"
+    echo -e "\t-p,  --pdf          to convert images into one pdf (by default 'out.pdf')"
+    echo -e "\t-ocr --detect-text  to make character recognition (it uses OCRmyPDF)(it'll use ur whole CPU)"
+    echo -e "\t-h,  --help         print to the output this message"
 }
 
 error(){
@@ -22,10 +23,11 @@ rewrite_out(){
 
 ### some variables
 url=""
-url_flag=0
 dir="$(pwd)/out"
-pdf_conv_flag=0
 pdf_name="out.pdf"
+url_flag=0
+pdf_conv_flag=0
+ocr_flag=0
 ###
 
 #flags input
@@ -48,6 +50,10 @@ do
             then
                 pdf_name=$1
             fi
+            ;;
+        --detect-text | -ocr )
+            shift
+            ocr_flag=1
             ;;
         --help | -h )       
             usage
@@ -125,4 +131,12 @@ done
 if [ $pdf_conv_flag == 1 ];
 then
     convert "$dir/*.png" $pdf_name
+fi
+
+#ocr with 'OCRmyPDF' (optional)
+#requires installation 'OCRmyPDF'
+if [ $ocr_flag == 1 ];
+then
+    ocrmypdf -l rus $pdf_name $pdf_name
+    ocrmypdf -l rus --jobs 16 $pdf_name $pdf_name
 fi
