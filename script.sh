@@ -138,5 +138,5 @@ fi
 if [ $ocr_flag == 1 ];
 then
     ocrmypdf -l rus $pdf_name $pdf_name
-    ocrmypdf -l rus --jobs 16 $pdf_name $pdf_name
+    ocrmypdf -l rus $pdf_name $pdf_name
 fi
