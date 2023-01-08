@@ -15,7 +15,7 @@ error(){
 }
 
 rewrite_out(){
-    echo -e "Directory 'out' already exists !"
+    echo -e "Directory '$dir' already exists !"
     echo -e "You haven't specified directory for NEW source !"
     echo -e "delete 'out' or move to another place"
     exit 2
