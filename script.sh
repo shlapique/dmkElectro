@@ -2,11 +2,10 @@
 
 usage(){
     echo "usage: ${0##*/} script [-H | --help]"
-    echo -e "\t-u,  --url          url of the book source"
-    echo -e "\t-d,  --directory    dir to save images"
-    echo -e "\t-p,  --pdf          to convert images into one pdf (by default 'out.pdf')"
-    echo -e "\t-ocr --detect-text  to make character recognition (it uses OCRmyPDF)(it'll use ur whole CPU)"
-    echo -e "\t-h,  --help         print to the output this message"
+    echo -e "\t-u,  url of the book source"
+    echo -e "\t-o,  [OPTIONAL] -- name of a file, default: 'out.pdf'"
+    echo -e "\t-c   [OPTIONAL] -- to make character recognition (it uses OCRmyPDF)(it'll use ur whole CPU)"
+    echo -e "\t-h,  print to the output this message"
 }
 
 error(){
@@ -26,45 +25,33 @@ url=""
 dir="$(pwd)/out"
 pdf_name="out.pdf"
 url_flag=0
-pdf_conv_flag=0
 ocr_flag=0
 ###
 
 #flags input
-while [ ! -z "$1" ];
+while getopts 'u:,o:,c,h' opt;
 do
-    case "$1" in
-        --url | -u )        
-            shift
-            url=$1
+    case $opt in
+        u)  
             url_flag=1
-            ;;
-        --directory | -d )   
-            shift
-            dir="$(pwd)/$1"
-            ;;
-        --pdf | -p )
-            shift
-            pdf_conv_flag=1
-            if [ ! -z "$1" ]
-            then
-                pdf_name=$1
-            fi
-            ;;
-        --detect-text | -ocr )
-            shift
+            url="${OPTARG}" ;;
+
+        o)  
+            pdf_name="${OPTARG}" ;;
+
+        c) 
             ocr_flag=1
             ;;
-        --help | -h )       
+
+        h)
             usage
             exit 0
             ;;
-        * )                 
+        *)                 
             error "unknown argument"
             exit 1
             ;;
     esac
-shift
 done
 
 #check for newbies
@@ -126,12 +113,9 @@ do
 done
 #%%%%%%%
 
-#pdf convertion (optional)
+#pdf convertion 
 #requires 'ghostscript' and 'ImageMagick' dependensies
-if [ $pdf_conv_flag == 1 ];
-then
-    convert "$dir/*.png" $pdf_name
-fi
+convert "$dir/*.png" $pdf_name
 
 #ocr with 'OCRmyPDF' (optional)
 #requires installation 'OCRmyPDF'
